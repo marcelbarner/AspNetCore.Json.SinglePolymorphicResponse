@@ -13,15 +13,18 @@ jobs:
     - name: Setup .NET Core  
       uses: actions/setup-dotnet@v1  
       with:  
-        dotnet-version: 3.1.101  
-    - name: Install dependencies  
+        global-json-file: global.json  
+    - name: Install dependencies
+      working-directory: ./src/AspNetCore.Json.SinglePolymorphicResponse
       run: dotnet restore  
-    - name: Build  
+    - name: Build
+      working-directory: ./src/AspNetCore.Json.SinglePolymorphicResponse
       run: dotnet build --configuration Release --no-restore  
-    - name: Test  
+    - name: Test
+      working-directory: ./src/AspNetCore.Json.SinglePolymorphicResponse
       run: dotnet test --no-restore --verbosity normal
     - name: Publish
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         PROJECT_FILE_PATH: src/AspNetCore.Json.SinglePolymorphicResponse/AspNetCore.Json.SinglePolymorphicResponse.csproj
-        NUGET_KEY: ${{secret.NUGET_API_KEY}}
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}

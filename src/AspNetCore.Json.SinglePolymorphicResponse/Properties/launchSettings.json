@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "AspNetCore.Json.SinglePolymorphicResponse": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:64861;http://localhost:64862"
+    }
+  }
+}

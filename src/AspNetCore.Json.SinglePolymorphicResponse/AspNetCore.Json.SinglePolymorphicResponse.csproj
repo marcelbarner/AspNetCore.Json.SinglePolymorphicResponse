@@ -10,7 +10,7 @@
     <Authors>Marcel Barner</Authors>
     <Company>MaBits</Company>
     <PackageDescription>Adds adjusted reponse to the AspNetCore 7 framework for single object response</PackageDescription>
-    <RepositoryUrl>https://github.com/OWNER/REPOSITORY</RepositoryUrl>
+    <RepositoryUrl>https://github.com/marcelbarner/AspNetCore.Json.SinglePolymorphicResponse</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 

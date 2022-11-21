@@ -23,4 +23,5 @@ jobs:
     - name: Publish
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
+        PROJECT_FILE_PATH: src/AspNetCore.Json.SinglePolymorphicResponse/AspNetCore.Json.SinglePolymorphicResponse.csproj
         NUGET_KEY: ${{secret.NUGET_API_KEY}}

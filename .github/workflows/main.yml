@@ -23,8 +23,9 @@ jobs:
     - name: Test
       working-directory: ./src/AspNetCore.Json.SinglePolymorphicResponse
       run: dotnet test --no-restore --verbosity normal
+    - name: Pack
+      working-directory: ./src/AspNetCore.Json.SinglePolymorphicResponse
+      run: dotnet pack -o nupkgs
     - name: Publish
-      uses: brandedoutcast/publish-nuget@v2.5.5
-      with:
-        PROJECT_FILE_PATH: src/AspNetCore.Json.SinglePolymorphicResponse/AspNetCore.Json.SinglePolymorphicResponse.csproj
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      working-directory: ./src/AspNetCore.Json.SinglePolymorphicResponse
+      run: dotnet nuget push nupkgs/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json

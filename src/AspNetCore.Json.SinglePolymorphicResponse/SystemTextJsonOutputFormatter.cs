@@ -91,15 +91,20 @@ namespace AspNetCore.Json.SinglePolymorphicResponse
                 if (descriptor is not null)
                 {
                     var actionReturnType = descriptor.MethodInfo.ReturnType;
-                    if (actionReturnType.Name == typeof(Task<object>).Name)
+                    if (actionReturnType.IsGenericType)
                     {
-                        actionReturnType = actionReturnType.GenericTypeArguments[0];
+                        var genericTypedDefinition = actionReturnType.GetGenericTypeDefinition();
+                        if (typeof(Task<>).GetGenericTypeDefinition().IsAssignableTo(genericTypedDefinition) || typeof(ValueTask<>).GetGenericTypeDefinition().IsAssignableTo(genericTypedDefinition))
+                        {
+                            genericTypedDefinition = actionReturnType.GenericTypeArguments[0].GetGenericTypeDefinition();
+                            actionReturnType = actionReturnType.GetGenericArguments()[0];
+                        }
+                        if (typeof(ActionResult<>).GetGenericTypeDefinition().IsAssignableTo(genericTypedDefinition))
+                        {
+                            objectType = actionReturnType.GenericTypeArguments[0];
+                        }
                     }
-                    if (actionReturnType.Name == typeof(ActionResult<object>).Name && actionReturnType.GenericTypeArguments.Length == 1)
-                    {
-                        objectType = actionReturnType.GenericTypeArguments[0];
-                    }
-                    else if (actionReturnType.Name != typeof(ActionResult).Name)
+                    else if (!typeof(ActionResult).IsAssignableTo(actionReturnType))
                     {
                         objectType = actionReturnType;
                     }

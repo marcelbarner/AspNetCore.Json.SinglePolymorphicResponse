@@ -91,20 +91,10 @@ namespace AspNetCore.Json.SinglePolymorphicResponse
                 if (descriptor is not null)
                 {
                     var actionReturnType = descriptor.MethodInfo.ReturnType;
-                    if (actionReturnType.IsGenericType)
-                    {
-                        var genericTypedDefinition = actionReturnType.GetGenericTypeDefinition();
-                        if (typeof(Task<>).GetGenericTypeDefinition().IsAssignableTo(genericTypedDefinition) || typeof(ValueTask<>).GetGenericTypeDefinition().IsAssignableTo(genericTypedDefinition))
-                        {
-                            genericTypedDefinition = actionReturnType.GenericTypeArguments[0].GetGenericTypeDefinition();
-                            actionReturnType = actionReturnType.GetGenericArguments()[0];
-                        }
-                        if (typeof(ActionResult<>).GetGenericTypeDefinition().IsAssignableTo(genericTypedDefinition))
-                        {
-                            objectType = actionReturnType.GenericTypeArguments[0];
-                        }
-                    }
-                    else if (!typeof(ActionResult).IsAssignableTo(actionReturnType))
+                    actionReturnType = RemoveGenericTypeWrapper(actionReturnType, typeof(Task<>));
+                    actionReturnType = RemoveGenericTypeWrapper(actionReturnType, typeof(ValueTask<>));
+                    actionReturnType = RemoveGenericTypeWrapper(actionReturnType, typeof(ActionResult<>));
+                    if (!typeof(ActionResult).IsAssignableTo(actionReturnType))
                     {
                         objectType = actionReturnType;
                     }
@@ -153,6 +143,22 @@ namespace AspNetCore.Json.SinglePolymorphicResponse
                     exceptionDispatchInfo?.Throw();
                 }
             }
+        }
+
+        private Type RemoveGenericTypeWrapper(Type type, Type genericTypeWrapper)
+        {
+            if (!type.IsGenericType)
+            {
+                return type;
+            }
+
+            var genericTypeDefinition = type.GetGenericTypeDefinition();
+
+            if (genericTypeWrapper.GetGenericTypeDefinition().IsAssignableTo(genericTypeDefinition))
+            {
+                type = type.GetGenericArguments()[0];
+            }
+            return type;
         }
     }
 }

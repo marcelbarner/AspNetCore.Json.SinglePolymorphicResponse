@@ -25,6 +25,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AspNetCore.Json.SinglePolymorphicResponse\AspNetCore.Json.SinglePolymorphicResponse.csproj" />
-    <ProjectReference Include="..\ExampleApp\ExampleApp.csproj" />
+    <ProjectReference Include="..\TestApp\TestApp.csproj" />
   </ItemGroup>
 </Project>

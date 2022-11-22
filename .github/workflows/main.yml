@@ -25,7 +25,7 @@ jobs:
       run: dotnet test --no-restore --verbosity normal
     - name: Pack
       working-directory: ./src/AspNetCore.Json.SinglePolymorphicResponse
-      run: dotnet pack -o nupkgs
+      run: dotnet pack --include-symbols --include-source --no-restore --no-build -c Release -o nupkgs
     - name: Publish
       working-directory: ./src/AspNetCore.Json.SinglePolymorphicResponse
       run: dotnet nuget push nupkgs/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json

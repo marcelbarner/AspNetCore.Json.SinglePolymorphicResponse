@@ -15,13 +15,13 @@ jobs:
       with:  
         global-json-file: global.json  
     - name: Install dependencies
-      working-directory: ./src/AspNetCore.Json.SinglePolymorphicResponse
+      working-directory: ./src/
       run: dotnet restore  
     - name: Build
-      working-directory: ./src/AspNetCore.Json.SinglePolymorphicResponse
+      working-directory: ./src/
       run: dotnet build --configuration Release --no-restore  
     - name: Test
-      working-directory: ./src/AspNetCore.Json.SinglePolymorphicResponse
+      working-directory: ./src/
       run: dotnet test --no-restore --verbosity normal
     - name: Pack
       working-directory: ./src/AspNetCore.Json.SinglePolymorphicResponse
